@@ -1,2 +1,2 @@
 # AWS Serverless Architecture | Terraform
-![architecture](https://github.com/samanxsy/aws-serverlessArch-IaC/assets/118216325/374d7723-c11b-4e4c-b1b6-cd11e9f4712c)
+![serverlessArchdrawio](https://github.com/samanxsy/aws-serverlessArch-IaC/assets/118216325/d1dc226c-11be-4a64-a059-0889790eaa09)
