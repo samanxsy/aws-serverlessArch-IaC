@@ -29,7 +29,7 @@ jobs:
         run: terraform fmt -recursive
 
       - name: Configure Terraform Cloud Token
-        run: echo "credentials \"app.terraform.io\" { token = '${{ secrets.TF_API_TOKEN }}' }" > $HOME/runner/.terraformrc
+        run: echo "credentials \"app.terraform.io\" { token = '${{ secrets.TF_API_TOKEN }}' }" > $HOME/.terraformrc
 
       - name: Initializing Backend
         run: terraform init
