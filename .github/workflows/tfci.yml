@@ -10,12 +10,10 @@ jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
     defaults:
       run:
-        working-directory: BLOCK1/terraform
+        working-directory: Terraform
 
     steps:
       - name: Checkout
@@ -24,8 +22,11 @@ jobs:
       - name: Terraform SetUp
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.5.2
+          terraform_version: 1.5.4
           terraform_wrapper: false
+  
+      - name: Configure Terraform Cloud Token
+        run: echo "credentials \"app.terraform.io\" { token = \$TF_API_TOKEN }" > ~/.terraformrc
 
       - name: Formating terraform code
         run: terraform fmt -recursive
@@ -35,3 +36,6 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
+
+      # - name: DEPLOYING THE INFRASTRUCTURE
+      #   run: terraform apply -auto-approve
