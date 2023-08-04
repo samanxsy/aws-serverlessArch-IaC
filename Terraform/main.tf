@@ -47,14 +47,17 @@ module "sftp" {
 # # DATA LAKE # #
 module "s3-landing-data" {
   source = "./modules/s3-landing-data"
+  kms_key_arn = module.kms.kms_key_arn
 }
 
 module "s3-raw-data" {
   source = "./modules/s3-raw-data"
+  kms_key_arn = module.kms.kms_key_arn
 }
 
 module "s3-curated-data" {
   source = "./modules/s3-curated-data"
+  kms_key_arn = module.kms.kms_key_arn
 }
 # # # # # # # # # # # # # # # #
 
@@ -70,8 +73,8 @@ module "athena" {
   query_name = "placeholder"
   athena_query = "placeholder"
   athena_data_source_name = "placeholder"
-  source_data_bucket_id = "placeholder"
-  s3_bucket_arn = "placeholder"
+  source_data_bucket_id = module.s3-curated-data.curated_s3_bucket_id
+  s3_bucket_arn = module.s3-curated-data.curated_s3_bucket_arn
 }
 
 
@@ -106,3 +109,10 @@ module "athena" {
 #   source = "./modules/sagemaker"
 # }
 # # # # # # # # # # # # # # # #
+
+
+
+# # KMS # #
+module "kms" {
+  source = "./modules/kms"
+}
