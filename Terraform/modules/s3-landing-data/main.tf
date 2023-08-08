@@ -52,3 +52,43 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "name" {
       }
     }
 }
+
+
+# Bucket Policy for Glue
+resource "aws_s3_bucket_policy" "glue_bucket_policy" {
+  bucket = aws_s3_bucket.landing_data_bucket.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = ["s3:GetObject"],
+        Effect = "Allow",
+        Resource = "${aws_s3_bucket.landing_data_bucket.arn}/*",
+        Principal = {
+          Service = "glue.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+
+# Bucket Policy for Glue Cataloging
+resource "aws_s3_bucket_policy" "glue_catalog_bucket_policy" {
+  bucket = aws_s3_bucket.landing_data_bucket.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = ["s3:GetObject", "s3:PutObject"],  # Add "s3:PutObject" action here
+        Effect = "Allow",
+        Resource = "${aws_s3_bucket.landing_data_bucket.arn}/*",
+        Principal = {
+          Service = "glue.amazonaws.com"
+        }
+      }
+    ]
+  })
+}

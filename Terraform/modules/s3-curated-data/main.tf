@@ -52,3 +52,39 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "name" {
       }
     }
 }
+
+
+# Bucket Policy for Athena, EMR, and Glue
+resource "aws_s3_bucket_policy" "athena_emr_glue_bucket_policy" {
+  bucket = aws_s3_bucket.curated_data_bucket.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = ["s3:GetObject"],
+        Effect = "Allow",
+        Resource = "${aws_s3_bucket.curated_data_bucket.arn}/*",
+        Principal = {
+          Service = "athena.amazonaws.com"
+        }
+      },
+      {
+        Action = ["s3:GetObject"],
+        Effect = "Allow",
+        Resource = "${aws_s3_bucket.curated_data_bucket.arn}/*",
+        Principal = {
+          Service = "elasticmapreduce.amazonaws.com"
+        }
+      },
+      {
+        Action = ["s3:PutObject"],
+        Effect = "Allow",
+        Resource = "${aws_s3_bucket.curated_data_bucket.arn}/*",
+        Principal = {
+          Service = "glue.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
