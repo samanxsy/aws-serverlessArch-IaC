@@ -31,6 +31,7 @@ terraform {
 # # DATA INGESTION # #
 module "kinesis-data-stream" {
   source = "./modules/kinesis-data-stream"
+  kms_key_arn = module.kms.kms_key_arn
 }
 
 module "glue-batch-ingestion" {
