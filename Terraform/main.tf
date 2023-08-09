@@ -29,8 +29,10 @@ terraform {
 # # # # # #
 
 # # DATA INGESTION # #
-module "kinesis-data-stream" {
-  source = "./modules/kinesis-data-stream"
+module "kinesis-data-firehose" {
+  source = "./modules/kinesis-data-firehose"
+  landing_s3_bucket_arn = module.s3-landing-data.landing_s3_bucket_arn
+
   kms_key_arn = module.kms.kms_key_arn
 }
 
