@@ -43,6 +43,8 @@ module "glue-batch-ingestion" {
 
 module "sftp" {
   source = "./modules/sftp"
+  sftp_public_key = "SECRET/PATH"
+  landing_s3_bucket_arn = module.s3-landing-data.landing_s3_bucket_arn
 }
 # # # # # # # # # # # # # # # #
 
