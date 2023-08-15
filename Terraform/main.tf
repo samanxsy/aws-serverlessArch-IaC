@@ -38,6 +38,7 @@ module "kinesis-data-firehose" {
 
 module "glue-batch-ingestion" {
   source = "./modules/glue-batch-ingestion"
+  landing_s3_bucket_arn = module.s3-landing-data.landing_s3_bucket_arn
 }
 
 module "sftp" {
