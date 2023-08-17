@@ -1,37 +1,23 @@
-# # Amazon Glue Crawler
+# # Amazon Glue Catalog
 # # # # # # # # # # # #
 
+resource "aws_glue_catalog_table" "curated_data_table" {
+  name = "curated_data"
+  database_name = var.glue_db_name
+  table_type = "EXTERNAL_TABLE"
 
-resource "aws_glue_crawler" "raw_data_crawler" {
-    name = "raw-data-crawler"
-    role = aws_iam_role.glue_role.arn
-    database_name = aws_glue_catalog_database.catalog_db.name
-
-    s3_target {
-      path = "s3://raw-data-bucket"
+  parameters = {
+    "classification" = "parquet"
+  }
+  storage_descriptor {
+    location = "s3://curated-data-bucket/"
+    input_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
+    output_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
+    compressed = false
+    columns {
+      name = "column1"
+      type = "string"
     }
-}
-
-
-# # IAM ROLE
-resource "aws_iam_role" "glue_role" {
-  name = "glue-role"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action = "sts:AssumeRole",
-        Effect = "Allow",
-        Principal = {
-          Service = "glue.amazonaws.com"
-        }
-      }
-    ]
-  })
-}
-
-
-# # Cataloge DB
-resource "aws_glue_catalog_database" "catalog_db" {
-  name = "data-catalog"
+    # Define more columns as needed
+  }
 }

@@ -39,6 +39,7 @@ module "kinesis-data-firehose" {
 module "glue-batch-ingestion" {
   source = "./modules/glue-batch-ingestion"
   landing_s3_bucket_arn = module.s3-landing-data.landing_s3_bucket_arn
+  glue_db_name = module.glue-crawler.glue_db_name
 }
 
 module "sftp" {
@@ -70,8 +71,13 @@ module "s3-curated-data" {
 
 
 # # DATA CATALOG & PROCCESS # #
+module "glue-crawler" {
+  source = "./modules/glue-crawler"
+}
+
 module "glue-cataloging" {
   source = "./modules/glue-cataloging"
+  glue_db_name = module.glue-crawler.glue_db_name
 }
 
 # module "step-functions" {
