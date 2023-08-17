@@ -69,6 +69,17 @@ module "s3-curated-data" {
 
 
 
+# # DATA CATALOG & PROCCESS # #
+module "glue-cataloging" {
+  source = "./modules/glue-cataloging"
+}
+
+# module "step-functions" {
+#   source = "./modules/step-functions"
+# }
+# # # # # # # # # # # # # # # #
+
+
 # # DATA ANALYTICS # #
 module "athena" {
   source = "./modules/athena"
@@ -86,18 +97,6 @@ module "athena" {
 
 # module "emr" {
 #   source = "./modules/emr"
-# }
-# # # # # # # # # # # # # # # #
-
-
-
-# # DATA CATALOG & PROCCESS # #
-# module "glue-cataloging" {
-#   source = "./modules/glue-cataloging"
-# }
-
-# module "step-functions" {
-#   source = "./modules/step-functions"
 # }
 # # # # # # # # # # # # # # # #
 
