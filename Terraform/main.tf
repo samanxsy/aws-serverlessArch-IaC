@@ -80,9 +80,11 @@ module "glue-cataloging" {
   glue_db_name = module.glue-crawler.glue_db_name
 }
 
-# module "step-functions" {
-#   source = "./modules/step-functions"
-# }
+module "step-functions" {
+  source = "./modules/step-functions"
+  first_glue_crawler_arn = module.glue-crawler.raw_data_crawler_arn
+  second_glue_crawler_arn = module.glue-cataloging.curated_data_table_arn
+}
 # # # # # # # # # # # # # # # #
 
 

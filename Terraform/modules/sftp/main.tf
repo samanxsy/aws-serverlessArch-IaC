@@ -3,7 +3,7 @@
 
 resource "aws_transfer_server" "sftp_server" {
   identity_provider_type = "SERVICE_MANAGED"
-  endpoint_type          = "PUBLIC"
+  endpoint_type          = "VPC" # Can be `PUBLIC` or set to a Configured VPC for more secure access
 }
 
 resource "aws_transfer_user" "sftp_user" {
