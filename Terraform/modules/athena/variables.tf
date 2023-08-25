@@ -6,29 +6,29 @@
 
 
 variable "workgroup_name" {
-    type = string
+  type = string
 }
 
 variable "database_name" {
-    type = string
+  type = string
 }
 
 variable "query_name" {
-    type = string
+  type = string
 }
 
 variable "athena_query" {
-    type = string
+  type = string
 }
 
 variable "athena_data_source_name" {
-    type = string
+  type = string
 }
 
 variable "source_data_bucket_id" {
-    type = string
+  type = string
 }
 
 variable "s3_bucket_arn" {
-    type = string
+  type = string
 }

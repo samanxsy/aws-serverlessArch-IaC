@@ -7,15 +7,15 @@ resource "aws_transfer_server" "sftp_server" {
 }
 
 resource "aws_transfer_user" "sftp_user" {
-  server_id          = aws_transfer_server.sftp_server.id
-  user_name          = "sftpuser"
-  role               = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-  home_directory     = "landing/sftp/"
+  server_id           = aws_transfer_server.sftp_server.id
+  user_name           = "sftpuser"
+  role                = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  home_directory      = "landing/sftp/"
   home_directory_type = "PATH"
 }
 
 resource "aws_transfer_ssh_key" "sftp_ssh_key" {
   server_id = aws_transfer_server.sftp_server.id
   user_name = aws_transfer_user.sftp_user.user_name
-  body = var.sftp_public_key
+  body      = var.sftp_public_key
 }

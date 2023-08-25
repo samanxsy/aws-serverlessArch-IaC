@@ -3,20 +3,20 @@
 
 
 resource "aws_kinesis_firehose_delivery_stream" "IoT_ingestion" {
-  name = "iot-sensors-data-ingestion"
+  name        = "iot-sensors-data-ingestion"
   destination = "extended_s3"
 
   extended_s3_configuration {
-    role_arn = aws_iam_role.firehose_role.arn
+    role_arn   = aws_iam_role.firehose_role.arn
     bucket_arn = var.landing_s3_bucket_arn
 
     buffering_size = 64
-  
+
     dynamic_partitioning_configuration {
       enabled = "true"
     }
 
-    prefix = "data/info/id" # PLACEHOLDER
+    prefix              = "data/info/id" # PLACEHOLDER
     error_output_prefix = "errors/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/!{firehose:error-output-type}/"
 
     processing_configuration {
@@ -25,7 +25,7 @@ resource "aws_kinesis_firehose_delivery_stream" "IoT_ingestion" {
       processors {
         type = "RecordDeAggregation"
         parameters {
-          parameter_name = "SubRecordType"
+          parameter_name  = "SubRecordType"
           parameter_value = "JSON"
         }
       }
@@ -35,8 +35,8 @@ resource "aws_kinesis_firehose_delivery_stream" "IoT_ingestion" {
         parameters {
           parameter_name  = "JsonParsingEngine"
           parameter_value = "JQ-1.6"
-      }
-      parameters {
+        }
+        parameters {
           parameter_name  = "MetadataExtractionQuery"
           parameter_value = "{customer_id:.customer_id}" # # PLACEHOLDER
         }
