@@ -109,12 +109,11 @@ module "athena" {
 # # # # # # # # # # # # # # # #
 
 
-
 # # DATA VISUALIZATION # #
 module "quicksight" {
   source     = "./modules/quicksight"
-  ACCOUNT_ID = "Enter-your-AWS-Account-ID"
   data_source_id = "data-source-ID"
+  ACCOUNT_ID = var.ACCOUNT_ID
 }
 
 
