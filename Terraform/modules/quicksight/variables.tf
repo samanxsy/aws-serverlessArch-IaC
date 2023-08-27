@@ -1,4 +1,9 @@
+# # Amazon QuickSight
+# # # # # # # # # # # 
 
+
+# # Variables
+# # # # # # #
 
 
 variable "ACCOUNT_ID" {
