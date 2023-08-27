@@ -1,5 +1,5 @@
-# AWS Step Functions
-# # # # # # # # # # #
+# # AWS Step Functions
+# # # # # # # # # # # #
 
 resource "aws_sfn_state_machine" "glue_processing_state_machine" {
   name     = "glue-processing-state-machine"

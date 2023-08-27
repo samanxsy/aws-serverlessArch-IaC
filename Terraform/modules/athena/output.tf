@@ -1,8 +1,8 @@
 # # Amazon Athena
 # # # # # # # # #
 
-# # Output TF File
-# # # # # # # # # #
+# # Outputs
+# # # # # #
 
 output "workgroup_arn" {
   value = aws_athena_workgroup.data_analysis.arn

@@ -1,8 +1,8 @@
 # # Amazon Kinesis Data Stream
 # # # # # # # # # # # # # # # #
 
-# # Variables TF File
-# # # # # # # # # # #
+# # Variables
+# # # # # # #
 
 variable "kms_key_arn" {
   type = string

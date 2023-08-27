@@ -1,8 +1,8 @@
 # # AWS KMS KEY
 # # # # # # # #
 
-# # Output TF File
-# # # # # # # # # #
+# # Output
+# # # # # #
 
 
 output "kms_key_arn" {

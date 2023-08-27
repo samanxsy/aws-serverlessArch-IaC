@@ -1,8 +1,8 @@
 # # Amazon Athena
 # # # # # # # # #
 
-# # Variables TF File
-# # # # # # # # # # #
+# # Variable
+# # # # # # #
 
 
 variable "workgroup_name" {

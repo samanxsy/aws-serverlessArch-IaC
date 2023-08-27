@@ -1,8 +1,8 @@
 # # Amazon Glue For data Ingestion
 # # # # # # # # # # # # # # # # # #
 
-# # Outputs TF File
-# # # # # # # # # #
+# # Outputs
+# # # # # #
 
 output "glue_catalog_table_name" {
   value = aws_glue_catalog_table.glue_table.name
