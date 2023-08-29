@@ -111,17 +111,29 @@ module "athena" {
 
 # # DATA VISUALIZATION # #
 module "quicksight" {
-  source     = "./modules/quicksight"
+  source         = "./modules/quicksight"
   data_source_id = "data-source-ID"
-  ACCOUNT_ID = var.ACCOUNT_ID
+  ACCOUNT_ID     = var.ACCOUNT_ID
 }
 
 
 
 # # MACHINE LEARNING # #
-# module "sagemaker" {
-#   source = "./modules/sagemaker"
-# }
+module "sagemaker" {
+  source = "./modules/sagemaker"
+
+  sagemaker_instance_name = "INSTANCE-NAME"
+  sagemaker_instance_type = "ml.t2.medium"
+  sagemaker_lifecycle_config_name = "CONFIG-NAME"
+  sagemaker_tags = {
+    Name = "NAME"
+    Environment = "Prod"
+    Project = "Project Name"
+    # Add more if needed
+  }
+
+  kms_key_arn = module.kms.kms_key_arn
+}
 # # # # # # # # # # # # # # # #
 
 
