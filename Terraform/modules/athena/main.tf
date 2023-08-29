@@ -1,9 +1,6 @@
 # # Amazon Athena
 # # # # # # # # #
 
-# # Main TF File
-# # # # # # # # #
-
 
 resource "aws_athena_workgroup" "data_analysis" {
   name  = var.workgroup_name
