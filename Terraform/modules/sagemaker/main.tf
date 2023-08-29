@@ -6,6 +6,7 @@ resource "aws_sagemaker_notebook_instance" "sagemaker_instance" {
     instance_type = var.sagemaker_instance_type
     role_arn = aws_iam_role.sagemaker_role.arn
     lifecycle_config_name = var.sagemaker_lifecycle_config_name
+      direct_internet_access = "Disabled"
 
     kms_key_id = var.kms_key_arn
 

@@ -124,7 +124,7 @@ module "sagemaker" {
 
   sagemaker_instance_name = "INSTANCE-NAME"
   sagemaker_instance_type = "ml.t2.medium"
-  sagemaker_lifecycle_config_name = "CONFIG-NAME"
+  sagemaker_lifecycle_config_name = "default"
   sagemaker_tags = {
     Name = "NAME"
     Environment = "Prod"
