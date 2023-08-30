@@ -25,8 +25,7 @@ terraform {
 # # # # # # # # # # # # # # # #
 
 
-# # Modules
-# # # # # #
+# # # # Modules # # # #
 
 # # DATA INGESTION # #
 module "kinesis-data-firehose" {
@@ -54,8 +53,31 @@ module "sftp" {
 # # DATA LAKE # #
 module "s3-landing-data" {
   source      = "./modules/s3-landing-data"
+
+  bucket_name = "landing-data-bucket"
+  acl_state = "private"
+
+  # LifeCycle Configs
+  lifecycle_rule_id = "Archiving"
+  lifecycle_status = "Enabled"
+  transition_days = "100"
+  transition_storage_class = "INTELLIGENT_TIERING"
+
+  # Versioning Configs
+  versioning_status = "Enabled"
+  mfa_status = "Enabled"
+
+  # Encryption
   kms_key_arn = module.kms.kms_key_arn
+  encryption_algorithm = "aws:kms"
+
+  # Tags
+  bucket_tags = {
+    Name = "landing-data"
+    Environment = "Dev"
+  }
 }
+
 
 module "s3-raw-data" {
   source      = "./modules/s3-raw-data"

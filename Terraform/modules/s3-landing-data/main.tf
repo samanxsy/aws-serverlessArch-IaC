@@ -3,17 +3,14 @@
 
 # S3
 resource "aws_s3_bucket" "landing_data_bucket" {
-  bucket = "landing-data-bucket"
-
-  tags = {
-    Name = "landing-data"
-  }
+  bucket = var.bucket_name
+  tags = var.bucket_tags
 }
 
 # ACL
 resource "aws_s3_bucket_acl" "bucket_acl" {
   bucket = aws_s3_bucket.landing_data_bucket.id
-  acl    = "private"
+  acl    = var.acl_state
 }
 
 # Versioning
@@ -21,8 +18,8 @@ resource "aws_s3_bucket_versioning" "versioning_landing_data_bucket" {
   bucket = aws_s3_bucket.landing_data_bucket.id
 
   versioning_configuration {
-    status     = "Enabled"
-    mfa_delete = "Enabled"
+    status = var.versioning_status
+    mfa_delete = var.mfa_status
   }
 }
 
@@ -31,11 +28,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
   bucket = aws_s3_bucket.landing_data_bucket.id
 
   rule {
-    id     = "Archiving"
-    status = "Enabled"
+    id     = var.lifecycle_rule_id
+    status = var.lifecycle_status
     transition {
-      days          = 100
-      storage_class = "INTELLIGENT_TIERING"
+      days          = var.transition_days
+      storage_class = var.transition_storage_class
     }
   }
 }
@@ -48,7 +45,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "name" {
   rule {
     apply_server_side_encryption_by_default {
       kms_master_key_id = var.kms_key_arn
-      sse_algorithm     = "aws:kms"
+      sse_algorithm     = var.encryption_algorithm
     }
   }
 }
