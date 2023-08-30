@@ -1,33 +1,15 @@
-# # Root Main Terraform File
-# # # # # # # # # # # # # # #
-
-# # Data Lake Infrastructure as Code
-# # # # # # # # # # # # # # # # # # #
-
-
-# # Terraform State
-terraform {
-  backend "remote" {
-    organization = "vx_data_lake"
-
-    workspaces {
-      name = "data-lake-iac"
-    }
-  }
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-}
-# # # # # # # # # # # # # # # #
+# Root Terraform Config
+#
+# Project : Data Lake Infrastructure as Code
+#
+# License : GNU GENERAL PUBLIC LICENSE
+#
+# Author : Saman Saybani
 
 
-# # # # Modules # # # #
+# # Modules # #
 
-# # DATA INGESTION # #
+# # DATA INGESTION
 module "kinesis-data-firehose" {
   source                = "./modules/kinesis-data-firehose"
   landing_s3_bucket_arn = module.s3-landing-data.landing_s3_bucket_arn
@@ -46,7 +28,6 @@ module "sftp" {
   sftp_public_key       = "SECRET/PATH"
   landing_s3_bucket_arn = module.s3-landing-data.landing_s3_bucket_arn
 }
-# # # # # # # # # # # # # # # #
 
 
 
@@ -88,7 +69,7 @@ module "s3-curated-data" {
   source      = "./modules/s3-curated-data"
   kms_key_arn = module.kms.kms_key_arn
 }
-# # # # # # # # # # # # # # # #
+
 
 
 

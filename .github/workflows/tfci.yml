@@ -32,7 +32,7 @@ jobs:
         run: echo '{"credentials":{"app.terraform.io":{"token":"'${{ secrets.TF_API_TOKEN }}'"}}}' > $HOME/.terraform.d/credentials.tfrc.json
 
       - name: Initializing Backend
-        run: terraform init
+        run: terraform init -reconfigure
 
       - name: Terraform Plan
         run: terraform plan
