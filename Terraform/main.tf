@@ -10,17 +10,17 @@
 # # Modules # #
 
 # # DATA INGESTION
-module "kinesis-data-firehose" {
-  source                = "./modules/kinesis-data-firehose"
+module "kinesis_data_firehose" {
+  source                = "./modules/kinesis_data_firehose"
   landing_s3_bucket_arn = module.landing_data_bucket.bucket_arn
 
   kms_key_arn = module.kms.kms_key_arn
 }
 
-module "glue-batch-ingestion" {
-  source                = "./modules/glue-batch-ingestion"
+module "glue_batch_ingestion" {
+  source                = "./modules/glue_batch_ingestion"
   landing_s3_bucket_arn = module.landing_data_bucket.bucket_arn
-  glue_db_name          = module.glue-crawler.glue_db_name
+  glue_db_name          = module.glue_crawler.glue_db_name
 }
 
 module "sftp" {
@@ -120,19 +120,19 @@ module "curated_data_bucket" {
 
 
 # # DATA CATALOG & PROCCESS # #
-module "glue-crawler" {
-  source = "./modules/glue-crawler"
+module "glue_crawler" {
+  source = "./modules/glue_crawler"
 }
 
-module "glue-cataloging" {
-  source       = "./modules/glue-cataloging"
-  glue_db_name = module.glue-crawler.glue_db_name
+module "glue_catalog" {
+  source       = "./modules/glue_catalog"
+  glue_db_name = module.glue_crawler.glue_db_name
 }
 
-module "step-functions" {
-  source                  = "./modules/step-functions"
-  first_glue_crawler_arn  = module.glue-crawler.raw_data_crawler_arn
-  second_glue_crawler_arn = module.glue-cataloging.curated_data_table_arn
+module "step_functions" {
+  source                  = "./modules/step_functions"
+  first_glue_crawler_arn  = module.glue_crawler.raw_data_crawler_arn
+  second_glue_crawler_arn = module.glue_catalog.curated_data_table_arn
 }
 # # # # # # # # # # # # # # # #
 
