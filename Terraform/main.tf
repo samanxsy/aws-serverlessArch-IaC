@@ -12,10 +12,41 @@
 # # DATA INGESTION
 module "kinesis_data_firehose" {
   source                = "./modules/kinesis_data_firehose"
-  landing_s3_bucket_arn = module.landing_data_bucket.bucket_arn
 
+  # Name and Destination
+  firehose_name = "iot-sensors-data-ingestion"
+  delivery_destination = "extended_s3"
+
+  # BUCKET
+  s3_bucket_arn = module.landing_data_bucket.bucket_arn
+  buffer_size = 64
+
+  # DYNAMIC PARTITION
+  dynamic_partitioning_enabling = "true"
+
+  # OBJECT PREFIXES
+  objects_prefix = "data/info/id" # PLACEHOLDER
+  errors_prefix = "errors/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/!{firehose:error-output-type}/" # EXAMPLE
+
+  # PROCESSING
+  processing_state = "true"
+
+  # PROCESSORS | TYPE 1
+  processor_type_1 = "RecordDeAggregation"
+  processor_type_1_param_name = "SubRecordType"
+  processor_type_1_param_value = "JSON"
+
+  # PROCESSORS | TYPE 2
+  processor_type_2 = "MetadataExtraction"
+  processor_type_2_param_name = "JsonParsingEngine"
+  processor_type_2_param_value = "JQ-1.6"
+
+
+  # ENCRYPTION
+  encryption_state = "true"
   kms_key_arn = module.kms.kms_key_arn
 }
+
 
 module "glue_batch_ingestion" {
   source                = "./modules/glue_batch_ingestion"

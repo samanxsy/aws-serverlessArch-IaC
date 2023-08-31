@@ -3,48 +3,44 @@
 
 
 resource "aws_kinesis_firehose_delivery_stream" "IoT_ingestion" {
-  name        = "iot-sensors-data-ingestion"
-  destination = "extended_s3"
+  name        = var.firehose_name
+  destination = var.delivery_destination
 
   extended_s3_configuration {
     role_arn   = aws_iam_role.firehose_role.arn
-    bucket_arn = var.landing_s3_bucket_arn
+    bucket_arn = var.s3_bucket_arn
 
-    buffering_size = 64
+    buffering_size = var.buffer_size
 
     dynamic_partitioning_configuration {
-      enabled = "true"
+      enabled = var.dynamic_partitioning_enabling
     }
 
-    prefix              = "data/info/id" # PLACEHOLDER
-    error_output_prefix = "errors/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/!{firehose:error-output-type}/"
+    prefix              = var.objects_prefix
+    error_output_prefix = var.errors_prefix
 
     processing_configuration {
-      enabled = "true"
+      enabled = var.processing_state
 
       processors {
-        type = "RecordDeAggregation"
+        type = var.processor_type_1
         parameters {
-          parameter_name  = "SubRecordType"
-          parameter_value = "JSON"
+          parameter_name  = var.processor_type_1_param_name
+          parameter_value = var.processor_type_1_param_value
         }
       }
 
       processors {
-        type = "MetadataExtraction"
+        type = var.processor_type_2
         parameters {
-          parameter_name  = "JsonParsingEngine"
-          parameter_value = "JQ-1.6"
-        }
-        parameters {
-          parameter_name  = "MetadataExtractionQuery"
-          parameter_value = "{customer_id:.customer_id}" # # PLACEHOLDER
+          parameter_name  = var.processor_type_2_param_name
+          parameter_value = var.processor_type_2_param_value
         }
       }
     }
   }
   server_side_encryption {
-    enabled = "true"
+    enabled = var.encryption_state
   }
 }
 
