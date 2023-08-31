@@ -11,7 +11,7 @@ variable "kms_key_arn" {
 variable "bucket_name" {
   description = "Name of the S3 bucket"
   type = string
-  default = "landing-data-bucket"
+  default = "s3-bucket"
 }
 
 variable "acl_state" {
@@ -51,7 +51,7 @@ variable "transition_days" {
 }
 
 variable "transition_storage_class" {
-  description = "The Storage class the data will be transfered to after the give transition days period "
+  description = "The Storage class the data will be transfered to after the give transition days period"
   type = string
   default = "INTELLIGENT_TIERING"
 }
@@ -67,7 +67,7 @@ variable "bucket_tags" {
   description = "Tags to identify the bucket for several purposes"
   type = map(string)
   default = {
-    Name = "landing-data"
+    Name = "s3-bucket"
     Environment = "Dev"
   }
 }
