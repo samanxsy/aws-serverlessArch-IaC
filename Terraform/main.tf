@@ -31,16 +31,21 @@ module "kinesis_data_firehose" {
   # PROCESSING
   processing_state = "true"
 
-  # PROCESSORS | TYPE 1
-  processor_type_1 = "RecordDeAggregation"
-  processor_type_1_param_name = "SubRecordType"
-  processor_type_1_param_value = "JSON"
-
-  # PROCESSORS | TYPE 2
-  processor_type_2 = "MetadataExtraction"
-  processor_type_2_param_name = "JsonParsingEngine"
-  processor_type_2_param_value = "JQ-1.6"
-
+  # PROCESSORS
+  processors = [
+    {
+      type = "RecordDeAggregation"
+      parameters = [
+        { param_name = "SubRecordType", param_value = "JSON" }
+      ]
+    },
+    {
+      type = "MetadataExtraction"
+      parameters = [
+        { param_name = "JsonParsingEngine", param_value = "JQ-1.6"}
+      ]
+    } # ADD MORE PROCESSORS IF NEEDED
+  ]
 
   # ENCRYPTION
   encryption_state = "true"

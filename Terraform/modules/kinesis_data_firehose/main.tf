@@ -22,23 +22,25 @@ resource "aws_kinesis_firehose_delivery_stream" "IoT_ingestion" {
     processing_configuration {
       enabled = var.processing_state
 
-      processors {
-        type = var.processor_type_1
-        parameters {
-          parameter_name  = var.processor_type_1_param_name
-          parameter_value = var.processor_type_1_param_value
-        }
-      }
+      dynamic "processors" {
+        for_each = var.processors
 
-      processors {
-        type = var.processor_type_2
-        parameters {
-          parameter_name  = var.processor_type_2_param_name
-          parameter_value = var.processor_type_2_param_value
-        }
+        content {
+          type = processors.value["type"]
+
+          dynamic "parameters" {
+            for_each = processors.value["parameters"]
+
+            content {
+              parameter_name = parameters.value["param_name"]
+              parameter_value = parameters.value["param_value"]
+            }
+          }
+        }      
       }
     }
   }
+
   server_side_encryption {
     enabled = var.encryption_state
   }

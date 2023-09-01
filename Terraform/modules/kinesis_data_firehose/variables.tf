@@ -59,43 +59,16 @@ variable "processing_state" {
   default = "true"
 }
 
-variable "processor_type_1" {
-  description = "Indicate the processing type"
-  type = string
-  default = "RecordDeAggregation"
+variable "processors" {
+  type = list(object({
+    type       = string
+    parameters = list(object({
+      param_name  = string
+      param_value = string
+    }))
+  }))
+  default = []
 }
-
-variable "processor_type_1_param_name" {
-  description = "Parameter name for the processor"
-  type = string
-  default = "SubRecordType"
-}
-
-variable "processor_type_1_param_value" {
-  description = "Parameter value for the processor"
-  type = string
-  default = "JSON"
-}
-
-
-variable "processor_type_2" {
-  description = "Indicate the processing type"
-  type = string
-  default = "MetadataExtraction"
-}
-
-variable "processor_type_2_param_name" {
-  description = "Parameter name for the processor"
-  type = string
-  default = "JsonParsingEngine"
-}
-
-variable "processor_type_2_param_value" {
-  description = "Parameter value for the processor"
-  type = string
-  default = "JQ-1.6"
-}
-
 
 # ENCRYPTION
 variable "encryption_state" {
