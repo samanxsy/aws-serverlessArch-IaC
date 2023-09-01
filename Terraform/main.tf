@@ -50,8 +50,26 @@ module "kinesis_data_firehose" {
 
 module "glue_batch_ingestion" {
   source                = "./modules/glue_batch_ingestion"
-  landing_s3_bucket_arn = module.landing_data_bucket.bucket_arn
+  s3_bucket_arn = module.landing_data_bucket.bucket_arn
   glue_db_name          = module.glue_crawler.glue_db_name
+  glue_table_name = "glue-table"
+
+  glue_table_type = "EXTERNAL_TABLE"
+  external_table = "TRUE"
+
+  storage_location = "s3://${module.landing_data_bucket.bucket_arn}/landing/glue/"
+  storage_input_format = "org.apache.hadoop.mapred.TextInputFormat"
+  storage_output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
+
+  serde_name = "example_name"
+  serialization_library = "org.openx.data.jsonserde.JsonSerDe"
+  columns = [
+    { name = "column1", type = "string" },
+    { name = "column2", type = "int" },
+    { name = "column3", type = "string" }
+    # ...
+    # ADD MORE IF NEEDED
+  ]
 }
 
 module "sftp" {

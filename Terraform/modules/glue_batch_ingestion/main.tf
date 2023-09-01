@@ -3,43 +3,32 @@
 
 
 resource "aws_glue_catalog_table" "glue_table" {
-  name          = "glue-table"
+  name          = var.glue_table_name
   database_name = var.glue_db_name
 
-  table_type = "EXTERNAL_TABLE"
+  table_type = var.glue_table_type
 
   parameters = {
-    EXTERNAL = "TRUE"
+    EXTERNAL = var.external_table
   }
 
   storage_descriptor {
-    location      = "s3://${var.landing_s3_bucket_arn}/landing/glue/"
-    input_format  = "org.apache.hadoop.mapred.TextInputFormat"
-    output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
+    location      = var.storage_location
+    input_format  = var.storage_input_format
+    output_format = var.storage_output_format
 
     ser_de_info {
-      name                  = "example_table"
-      serialization_library = "org.openx.data.jsonserde.JsonSerDe"
+      name                  = var.serde_name
+      serialization_library = var.serialization_library
     }
+  
+    dynamic "columns" {
+      for_each = var.columns
 
-    columns {
-      name = "column1"
-      type = "string"
-    }
-
-    columns {
-      name = "column2"
-      type = "string"
-    }
-
-    columns {
-      name = "column3"
-      type = "string"
-    }
-
-    columns {
-      name = "column4"
-      type = "string"
+      content {
+        name = columns.value["name"]
+        type = columns.value["type"]
+      }
     }
   }
 }
