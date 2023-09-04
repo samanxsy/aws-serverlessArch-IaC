@@ -191,6 +191,12 @@ module "curated_data_bucket" {
 # # DATA CATALOG & PROCCESS # #
 module "glue_crawler" {
   source = "./modules/glue_crawler"
+
+  # Crawler Name
+  crawler_name = "raw-data-crawler"
+
+  # Target S3
+  target_s3_bucket_path = "s3://raw-data-bucket"
 }
 
 module "glue_catalog" {

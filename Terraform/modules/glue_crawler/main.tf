@@ -3,12 +3,12 @@
 
 
 resource "aws_glue_crawler" "raw_data_crawler" {
-  name          = "raw-data-crawler"
+  name          = var.crawler_name
   role          = aws_iam_role.glue_role.arn
   database_name = aws_glue_catalog_database.catalog_db.name
 
   s3_target {
-    path = "s3://raw-data-bucket"
+    path = var.target_s3_bucket_path
   }
 }
 
