@@ -201,7 +201,28 @@ module "glue_crawler" {
 
 module "glue_catalog" {
   source       = "./modules/glue_catalog"
+
+  # Glue Catalog
+  glue_catalog_table_name = "raw-data"
   glue_db_name = module.glue_crawler.glue_db_name
+
+  # Parameter
+  classification_parameter = "parquet"
+
+  # Storage
+  storage_location = "s3://curated-data-bucket/"
+  storage_input_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
+  storage_output_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
+  compression_state = false
+
+  # Columns
+  columns = [
+    { name = "column1", type = "string" },
+    { name = "column2", type = "int" },
+    { name = "column3", type = "string" }
+    # ...
+    # ADD MORE IF NEEDED
+  ]
 }
 
 module "step_functions" {
