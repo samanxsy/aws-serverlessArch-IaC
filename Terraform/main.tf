@@ -79,8 +79,23 @@ module "glue_batch_ingestion" {
 
 module "sftp" {
   source                = "./modules/sftp"
-  sftp_public_key       = "SECRET/PATH"
-  landing_s3_bucket_arn = module.landing_data_bucket.bucket_arn
+
+  # Transfer Server
+  id_provider_type = "SERVICE_MANAGED"
+  endpoint = "VPC"
+
+  # Tranfer User
+  transfer_user_name = "SFTP-USER"
+  transfer_user_home_directory = "usr/sftp"
+  transfer_user_home_directory_type = "PATH"
+  transfer_user_role = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+
+
+  # Transfer Key
+  sftp_public_key       = var.TRANSFER_PUBLIC_KEY
+
+  # S3 Bucket
+  s3_bucket_arn = module.landing_data_bucket.bucket_arn
 }
 
 
