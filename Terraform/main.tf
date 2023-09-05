@@ -225,12 +225,20 @@ module "glue_catalog" {
   ]
 }
 
-module "step_functions" {
+module "step_functions" { # NOT COMPLETE YET
   source                  = "./modules/step_functions"
+
+  # Info
+  state_machine_name = "data-processor-machine"
+
+  # State Machine Definition
+  state_machine_definition_comment = "The state machine for the data processing cycle"
+  initial_point_state = "RunFirstCrawler" 
+
+  # Crawler Tasks
   first_glue_crawler_arn  = module.glue_crawler.raw_data_crawler_arn
   second_glue_crawler_arn = module.glue_catalog.curated_data_table_arn
 }
-# # # # # # # # # # # # # # # #
 
 
 # # DATA ANALYTICS # #
@@ -267,9 +275,12 @@ module "quicksight" {
 module "sagemaker" {
   source = "./modules/sagemaker"
 
+  # SageMaker Info
   sagemaker_instance_name = "INSTANCE-NAME"
   sagemaker_instance_type = "ml.t2.medium"
   sagemaker_lifecycle_config_name = "default"
+
+  # Tags
   sagemaker_tags = {
     Name = "NAME"
     Environment = "Prod"

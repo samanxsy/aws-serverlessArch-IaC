@@ -2,12 +2,12 @@
 # # # # # # # # # # # #
 
 resource "aws_sfn_state_machine" "glue_processing_state_machine" {
-  name     = "glue-processing-state-machine"
+  name     = var.state_machine_name
   role_arn = aws_iam_role.step_function_role.arn
 
   definition = jsonencode({
-    Comment = "Step function for cataloging and processing",
-    StartAt = "RunFirstCrawler",
+    Comment = var.state_machine_definition_comment,
+    StartAt = var.initial_point_state,
     States = {
       RunFirstCrawler = {
         Type     = "Task",
