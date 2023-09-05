@@ -242,16 +242,19 @@ module "step_functions" { # NOT COMPLETE YET
 
 
 # # DATA ANALYTICS # #
-module "athena" {
+module "athena" { # NOT COMPLETE
   source = "./modules/athena"
 
-  # # Variables
-  workgroup_name          = "placeholder"
-  database_name           = "placeholder"
-  query_name              = "placeholder"
-  athena_query            = "placeholder"
-  athena_data_source_name = "placeholder"
-  source_data_bucket_id   = module.curated_data_bucket.bucket_id
+  # Work Group
+  workgroup_name          = "athena-workgroup"
+  workgroup_state         = "ENABLED"
+
+  # Athena Named Query
+  athena_namedq_query_name = "athena-query-name"
+  athena_namedq_db_name           = "athena-db-name"
+  athena_query            = "THE SQL QUERY"
+
+  # S3
   s3_bucket_arn           = module.curated_data_bucket.bucket_arn
 }
 
