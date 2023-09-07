@@ -32,11 +32,11 @@ variable "dashboard_permisssion_actions" {
   description = "List of dashboard actions"
   type = list(string)
   default = [
-      "quicksight:DescribeDashboard",
-      "quicksight:ListDashboardVersions",
-      "quicksight:UpdateDashboard",
-      "quicksight:DeleteDashboard"
-      # Add more as needed
+    "quicksight:DescribeDashboard",
+    "quicksight:ListDashboardVersions",
+    "quicksight:UpdateDashboard",
+    "quicksight:DeleteDashboard"
+    # Add more as needed
   ]
 }
 
@@ -53,7 +53,6 @@ variable "template_version" {
 
 variable "quicksight_template_id" {
   type = string
-  default = "templateID"
 }
 
 variable "template_source_placeholder" {
@@ -62,10 +61,80 @@ variable "template_source_placeholder" {
 }
 
 
-variable "ACCOUNT_ID" {
+# Analysis
+variable "analysis_name" {
+  type = string
+  default = "quicksight-analysis"
+}
+
+variable "quicksight_analysis_id" {
+  type = string  
+}
+
+variable "analysis_definition_identifier" {
+  description = "define a user-friendly identifier for the data set"
+  type = string
+  default = "CustomerData"
+}
+
+variable "analysis_permission_principal" {
+  description = "Specify the ARN of the principal (User, Group, or Role"
   type = string
 }
 
+variable "analysis_permission_actions" {
+  description = "list of actions"
+  type = list(string)
+  default = [ 
+    "quicksight:DescribeAnalysis",
+    "quicksight:ListAnalyses",
+    "quicksight:UpdateAnalysis",
+    "quicksight:DeleteAnalysis"
+  ]
+}
+
+
+# Data Source
+variable "data_source_name" {
+  type = string
+  default = "data-source"
+}
+
+variable "data_source_type" {
+  description = "define the type of the data source"
+  type = string
+  default = "S3"
+}
+
 variable "data_source_id" {
+  type = string
+}
+
+variable "manifest_file_s3_bucket" {
+  description = "Specify the location of a manifest file that QuickSight can use to access data"
+  type = string
+}
+
+variable "manfiest_file_key" {
+  description = "the S3 object key to the manifest file within the bucket"
+  type = string
+}
+
+variable "data_source_permission_principal" {
+  type = string
+  # 
+}
+
+variable "data_source_permission_actions" {
+  type = list(string)
+  default = [ 
+    "quicksight:DescribeDataSource",
+    "quicksight:UpdateDataSource",
+    "quicksight:DeleteDataSource"
+  ]
+}
+
+##########
+variable "ACCOUNT_ID" {
   type = string
 }

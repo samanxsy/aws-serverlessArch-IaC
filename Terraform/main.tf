@@ -281,7 +281,7 @@ module "quicksight" {
       "quicksight:ListDashboardVersions",
       "quicksight:UpdateDashboard",
       "quicksight:DeleteDashboard" 
-      # Add more as needed
+      # Add more or remove as Needed
   ]
 
   # Template
@@ -290,8 +290,35 @@ module "quicksight" {
   quicksight_template_id = "TempID"
   template_source_placeholder = "PLACEHOLDER"
 
+  # Analysis
+  analysis_name = "data-lake-analysis"
+  quicksight_analysis_id = "ID"
+  analysis_definition_identifier = "InsuranceData"
+  analysis_permission_principal = "arn:aws:quicksight:us-east-1:${var.ACCOUNT_ID}:namespace/default"
+  analysis_permission_actions = [
+      "quicksight:DescribeAnalysis",
+      "quicksight:ListAnalyses",
+      "quicksight:UpdateAnalysis",
+      "quicksight:DeleteAnalysis"
+      # Add more or remove as Needed
+  ]
 
+  # Data Source
+  data_source_name = "source-name"
+  data_source_type = "S3"
   data_source_id = "data-source-ID"
+
+  # Data Source manifest
+  manifest_file_s3_bucket = "curated-data-bucket"
+  manfiest_file_key = "object-key"
+  data_source_permission_principal = "arn:aws:quicksight:us-east-1:${var.ACCOUNT_ID}:namespace/default"
+  data_source_permission_actions = [
+    "quicksight:DescribeDataSource",
+    "quicksight:UpdateDataSource",
+    "quicksight:DeleteDataSource"
+  ]
+
+
   ACCOUNT_ID     = var.ACCOUNT_ID
 }
 

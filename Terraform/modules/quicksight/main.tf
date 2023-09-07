@@ -45,51 +45,42 @@ resource "aws_quicksight_template" "template" {
 
 # # QuickSight Analysis
 resource "aws_quicksight_analysis" "analysis" {
-  name = "data-lake-analysis"
-  analysis_id = "analysis-id"
+  name = var.analysis_name
+  analysis_id = var.quicksight_analysis_id
 
   definition {
     data_set_identifiers_declarations {
       data_set_arn = aws_quicksight_data_source.datasource.arn
-      identifier = "Declare an Identifier"
+      identifier = var.analysis_definition_identifier
     }
   }
 
   permissions {
-    principal = "arn:aws:quicksight:us-east-1:${var.ACCOUNT_ID}:namespace/default"
-    actions = [
-      "quicksight:DescribeAnalysis",
-      "quicksight:ListAnalyses",
-      "quicksight:UpdateAnalysis",
-      "quicksight:DeleteAnalysis"
-    ]
+    principal = var.analysis_permission_principal
+    actions = var.dashboard_permisssion_actions
   }
 }
 
 
 # QuickSight Data Source
 resource "aws_quicksight_data_source" "datasource" {
-  name = "data-lake-datasource"
-  type = "S3"
+  name = var.data_source_name
+  type = var.data_source_type
 
   data_source_id = var.data_source_id
 
   parameters {
     s3 {
       manifest_file_location {
-        bucket = "curated-data-bucket"
-        key = "manifest-file"
+        bucket = var.manifest_file_s3_bucket
+        key = var.manfiest_file_key
       }
     }
   }
 
   permission {
-    principal = "arn:aws:quicksight:us-east-1:${var.ACCOUNT_ID}:namespace/default"
-    actions = [
-      "quicksight:DescribeDataSource",
-      "quicksight:UpdateDataSource",
-      "quicksight:DeleteDataSource"
-    ]
+    principal = var.data_source_permission_principal
+    actions = var.data_source_permission_actions
   }
 }
 
