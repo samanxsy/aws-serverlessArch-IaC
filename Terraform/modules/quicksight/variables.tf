@@ -134,7 +134,36 @@ variable "data_source_permission_actions" {
   ]
 }
 
-##########
+# Data Set
+variable "data_set_name" {
+  type = string
+  default = "data-set"
+}
+
 variable "ACCOUNT_ID" {
   type = string
+}
+
+variable "quicksight_data_set_id" {
+  type = string
+}
+
+variable "data_set_import_mode" {
+  description = "Determine how data is loaded into QUickSIght"
+  type = string
+  default = "DIRECT_QUERY"
+}
+
+variable "data_set_table_map_id" {
+  description = "Define mapping between physical tables and logical tables within the data set"
+  type = string
+}
+
+variable "data_set_permission_principal" {
+  type = string
+}
+
+variable "data_set_permission_actions" {
+  type = list(string)
+  default = [ "quicksight:DescribeDataSet" ]
 }

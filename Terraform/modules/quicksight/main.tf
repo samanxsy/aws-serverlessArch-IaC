@@ -86,17 +86,17 @@ resource "aws_quicksight_data_source" "datasource" {
 
 # # Data Set
 resource "aws_quicksight_data_set" "dataset" {
-  name = "data-lake-dataset"
+  name = var.data_set_name
   aws_account_id = var.ACCOUNT_ID
-  data_set_id = "data-lake-dataset-ID"
-  import_mode = "DIRECT_QUERY"
+  data_set_id = var.quicksight_data_set_id
+  import_mode = var.data_set_import_mode
 
   physical_table_map {
-    physical_table_map_id = "PhysicalTableMapID"
+    physical_table_map_id = var.data_set_table_map_id
   }
 
   permissions {
-    principal = "arn:aws:quicksight:us-east-1:${var.ACCOUNT_ID}:namespace/default"
-    actions   = ["quicksight:DescribeDataSet"]
+    principal = var.data_set_permission_principal
+    actions   = var.data_set_permission_actions
   }
 }

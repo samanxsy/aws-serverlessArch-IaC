@@ -318,8 +318,14 @@ module "quicksight" {
     "quicksight:DeleteDataSource"
   ]
 
-
+  # Data Set
+  data_set_name = "data-lake-set"
   ACCOUNT_ID     = var.ACCOUNT_ID
+  quicksight_data_set_id = "QSDSID"
+  data_set_import_mode = "DIRECT_QUERY"
+  data_set_table_map_id = "MappingID"
+  data_set_permission_principal = "arn:aws:quicksight:us-east-1:${var.ACCOUNT_ID}:namespace/default"
+  data_set_permission_actions = [ "quicksight:DescribeDataSet" ]
 }
 
 

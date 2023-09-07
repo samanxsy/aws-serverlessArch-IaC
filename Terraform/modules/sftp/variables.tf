@@ -13,7 +13,7 @@ variable "id_provider_type" {
 variable "endpoint" {
   description = "Endpoint type; Can be Public, or set to a configured VPC for a granular access"
   type = string
-  default = "PUBLIC"
+  default = "VPC"
 }
 
 variable "transfer_user_name" {
