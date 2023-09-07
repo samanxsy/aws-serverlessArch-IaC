@@ -2,13 +2,13 @@
 # # # # # # # # # # # # # # #
 
 terraform {
-  backend "remote" {
+  cloud {
     organization = "vx_data_lake"
-
     workspaces {
       name = "data-lake-iac"
     }
   }
+
 
   required_providers {
     aws = {
