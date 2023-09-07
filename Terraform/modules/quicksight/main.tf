@@ -4,9 +4,9 @@
 
 # # QuickSight Dashboard
 resource "aws_quicksight_dashboard" "dashboard" {
-  name = "data-lake-dashboard"
+  name = var.dashboard_name
   version_description = 1
-  dashboard_id = "Dashbord-ID"
+  dashboard_id = var.quicksight_dashboard_id
 
   source_entity {
     source_template {
@@ -19,33 +19,29 @@ resource "aws_quicksight_dashboard" "dashboard" {
   }
 
   permissions {
-    principal = "arn:aws:quicksight:us-east-1:${var.ACCOUNT_ID}:namespace/default"
-    actions = [
-      "quicksight:DescribeDashboard",
-      "quicksight:ListDashboardVersions",
-      "quicksight:UpdateDashboard",
-      "quicksight:DeleteDashboard"
-    ]
+    principal = var.dashboard_permission_principal
+    actions = var.dashboard_permisssion_actions
   }
 }
 
 
 # # QuickSight Template
 resource "aws_quicksight_template" "template" {
-  name = "data-lake-template"
-  version_description = 1
-  template_id = "TempID"
+  name = var.template_name
+  version_description = var.template_version
+  template_id = var.quicksight_template_id
 
   source_entity {
     source_analysis {
       arn = aws_quicksight_analysis.analysis.arn
       data_set_references {
-        data_set_placeholder = "PLACEHOLDER"
+        data_set_placeholder = var.template_source_placeholder
         data_set_arn = aws_quicksight_data_set.dataset.arn
       }
     }
   }
 }
+
 
 # # QuickSight Analysis
 resource "aws_quicksight_analysis" "analysis" {

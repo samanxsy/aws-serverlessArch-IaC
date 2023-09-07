@@ -268,6 +268,29 @@ module "athena" { # NOT COMPLETE
 # # DATA VISUALIZATION # #
 module "quicksight" {
   source         = "./modules/quicksight"
+
+  # Dashboard
+  dashboard_name = "data-lake-dashboard"
+  dashboard_version = 1
+  quicksight_dashboard_id = "dash-id"
+
+  # Dahboard Principals
+  dashboard_permission_principal = "arn:aws:quicksight:us-east-1:${var.ACCOUNT_ID}:namespace/default"
+  dashboard_permisssion_actions = [
+      "quicksight:DescribeDashboard",
+      "quicksight:ListDashboardVersions",
+      "quicksight:UpdateDashboard",
+      "quicksight:DeleteDashboard" 
+      # Add more as needed
+  ]
+
+  # Template
+  template_name = "data-lake-template"
+  template_version = 1
+  quicksight_template_id = "TempID"
+  template_source_placeholder = "PLACEHOLDER"
+
+
   data_source_id = "data-source-ID"
   ACCOUNT_ID     = var.ACCOUNT_ID
 }
