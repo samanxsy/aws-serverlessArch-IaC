@@ -46,23 +46,20 @@ resource "aws_kinesis_firehose_delivery_stream" "IoT_ingestion" {
   }
 }
 
-
-# # POLICY
-data "aws_iam_policy_document" "firehose_assume_role" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["firehose.amazonaws.com"]
-    }
-
-    actions = ["sts:AssumeRole"]
-  }
-}
-
 # # ROLE
 resource "aws_iam_role" "firehose_role" {
   name               = "firehose_test_role"
-  assume_role_policy = data.aws_iam_policy_document.firehose_assume_role.json
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "firehose.amazonaws.com"
+        }
+      }
+    ]
+  })
 }

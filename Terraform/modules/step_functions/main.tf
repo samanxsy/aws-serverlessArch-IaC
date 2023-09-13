@@ -40,9 +40,3 @@ resource "aws_iam_role" "step_function_role" {
     ],
   })
 }
-
-resource "aws_iam_policy_attachment" "step_function_policy_attachment" {
-  name       = "StepFunctionPolicyAttachment"
-  roles      = [aws_iam_role.step_function_role.name]
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSStepFunctions-Role"
-}
