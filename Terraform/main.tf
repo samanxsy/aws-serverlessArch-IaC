@@ -375,3 +375,9 @@ module "s3_bucket_policies" {
   landing_data_bucket_id = module.landing_data_bucket.bucket_id
   landing_data_bucket_arn = module.landing_data_bucket.bucket_arn
 }
+
+module "athena_policies" {
+  source = "./policies/athena_policies"
+  
+  s3_bucket_arn = module.curated_data_bucket.bucket_arn
+}
