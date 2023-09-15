@@ -2,7 +2,7 @@
 #
 # Bucket Policy Glue, and Glue Cataloging
 
-resource "aws_s3_bucket_policy" "glue_bucket_policy" {
+resource "aws_s3_bucket_policy" "landing_bucket_glue_policy" {
   bucket = var.landing_data_bucket_id
 
   policy = jsonencode({
@@ -20,7 +20,7 @@ resource "aws_s3_bucket_policy" "glue_bucket_policy" {
   })
 }
 
-resource "aws_s3_bucket_policy" "glue_catalog_bucket_policy" {
+resource "aws_s3_bucket_policy" "landing_bucket_glue_catalog_policy" {
   bucket = var.landing_data_bucket_id
 
   policy = jsonencode({

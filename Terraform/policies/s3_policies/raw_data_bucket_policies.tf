@@ -4,7 +4,7 @@
 
 
 # Bucket Policy for Glue
-resource "aws_s3_bucket_policy" "glue_bucket_policy" {
+resource "aws_s3_bucket_policy" "raw_bucket_glue_policy" {
   bucket = var.raw_data_bucket_id
 
   policy = jsonencode({
@@ -24,7 +24,7 @@ resource "aws_s3_bucket_policy" "glue_bucket_policy" {
 
 
 # Bucket Policy for Glue Cataloging (Consumed by Curated Data Glue Job)
-resource "aws_s3_bucket_policy" "glue_catalog_bucket_policy" {
+resource "aws_s3_bucket_policy" "raw_bucket_glue_catalog_policy" {
   bucket = var.raw_data_bucket_id
 
   policy = jsonencode({
