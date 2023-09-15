@@ -82,3 +82,8 @@ variable "kms_key_arn" {
   description = "KMS Key ARN"
   type = string
 }
+
+
+variable "kinesis_role" {
+  type = string 
+}

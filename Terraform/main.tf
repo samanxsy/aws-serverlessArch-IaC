@@ -47,6 +47,9 @@ module "kinesis_data_firehose" {
     } # ADD MORE PROCESSORS IF NEEDED
   ]
 
+  # Role
+  kinesis_role = module.iam_roles.firehose_role_arn
+
   # ENCRYPTION
   encryption_state = "true"
   kms_key_arn = module.kms.kms_key_arn
@@ -197,6 +200,9 @@ module "glue_crawler" {
 
   # Target S3
   target_s3_bucket_path = "s3://raw-data-bucket"
+
+  # Role
+  glue_crawler_role = module.iam_roles.glue_crawler_role_arn
 }
 
 module "glue_catalog" {
@@ -238,6 +244,9 @@ module "step_functions" { # NOT COMPLETE YET
   # Crawler Tasks
   first_glue_crawler_arn  = module.glue_crawler.raw_data_crawler_arn
   second_glue_crawler_arn = module.glue_catalog.curated_data_table_arn
+
+  # Role
+  step_function_role = module.iam_roles.step_function_role_arn
 }
 
 
@@ -338,6 +347,8 @@ module "sagemaker" {
   sagemaker_instance_name = "INSTANCE-NAME"
   sagemaker_instance_type = "ml.t2.medium"
   sagemaker_lifecycle_config_name = "default"
+  sage_maker_role = module.iam_roles.sage_maker_role_arn
+
 
   # Tags
   sagemaker_tags = {
@@ -380,4 +391,10 @@ module "athena_policies" {
   source = "./policies/athena_policies"
   
   s3_bucket_arn = module.curated_data_bucket.bucket_arn
+}
+
+
+# # ROLES # #
+module "iam_roles" {
+  source = "./modules/iam_roles"
 }

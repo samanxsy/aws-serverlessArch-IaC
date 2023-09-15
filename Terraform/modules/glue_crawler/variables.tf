@@ -14,3 +14,8 @@ variable "target_s3_bucket_path" {
     description = "The path to the target s3 bucket"
     type = string
 }
+
+
+variable "glue_crawler_role" {
+    type = string
+}

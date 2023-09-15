@@ -7,7 +7,7 @@ resource "aws_kinesis_firehose_delivery_stream" "IoT_ingestion" {
   destination = var.delivery_destination
 
   extended_s3_configuration {
-    role_arn   = aws_iam_role.firehose_role.arn
+    role_arn   = var.kinesis_role
     bucket_arn = var.s3_bucket_arn
 
     buffering_size = var.buffer_size
@@ -44,22 +44,4 @@ resource "aws_kinesis_firehose_delivery_stream" "IoT_ingestion" {
   server_side_encryption {
     enabled = var.encryption_state
   }
-}
-
-# # ROLE
-resource "aws_iam_role" "firehose_role" {
-  name               = "firehose_test_role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action = "sts:AssumeRole",
-        Effect = "Allow",
-        Principal = {
-          Service = "firehose.amazonaws.com"
-        }
-      }
-    ]
-  })
 }

@@ -29,3 +29,8 @@ variable "first_glue_crawler_arn" {
 variable "second_glue_crawler_arn" {
   type = string
 }
+
+
+variable "step_function_role" {
+  type = string
+}

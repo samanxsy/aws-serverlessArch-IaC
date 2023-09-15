@@ -28,3 +28,8 @@ variable "sagemaker_tags" {
 variable "kms_key_arn" {
     type = string
 }
+
+
+variable "sage_maker_role" {
+  type = string
+}
